@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+
+<h1>Bill Management System</h1>
+
+<a href="/add">Add New Bill</a> |
+<a href="/logout">Logout</a>
+
+<h3>All Bills</h3>
+
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Amount</th>
+        <th>Due Date</th>
+        <th>Status</th>
+        <th>Paid At</th>
+        <th>Action</th>
+    </tr>
+
+    {% for bill in bills %}
+    <tr>
+        <td>{{ bill[2] }}</td>
+        <td>{{ bill[3] }}</td>
+        <td>{{ bill[4] }}</td>
+        <td>{{ bill[5] }}</td>
+        <td>{{ bill[6] }}</td>
+        <td>
+            {% if bill[5] == 'Pending' %}
+            <form action="/pay/{{ bill[0] }}" method="POST">
+                <button type="submit">Mark Paid</button>
+            </form>
+            {% endif %}
+            <form action="/delete/{{ bill[0] }}" method="POST">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+</div>
+</body>
+</html>
